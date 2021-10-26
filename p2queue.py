@@ -51,7 +51,7 @@ class Queue:
     def isFull(self):
         # Return True if the number of element in the queue is equal to
         # the length of queue. Return False otherwise.
-        return self.numElems == len(self.queue)
+        return self.rear == len(self.queue)
 
     """
     isEmpty function to check if the queue is empty.
@@ -73,6 +73,8 @@ class Queue:
             new_queue[i] = self.queue[i]
         # Update the queue to the new one
         self.queue = new_queue
+        self.front = 0
+        self.rear = self.numElems
         return
 
     """
@@ -82,10 +84,10 @@ class Queue:
         # If the queue is full, resize
         if self.isFull():
             self.resize()
-        # Increment top
-        self.rear += 1
         # Push the value to the back of the queue
         self.queue[self.rear] = val
+        # Increment top
+        self.rear += 1
         # Update number of element by one
         self.numElems += 1
         return
@@ -99,12 +101,12 @@ class Queue:
             return None
         # Pop the front element
         else:
-            # Get the top element
-            val = self.stack[self.top]
-            # Set the top to be None
-            self.stack[self.top] = None
-            # Update top and number of element
-            self.top -= 1
+            # Get the front element
+            val = self.queue[self.front]
+            # Set the front to be None
+            self.queue[self.front] = None
+            # Update front and number of element
+            self.front += 1
             self.numElems -= 1
             return val
     
@@ -114,7 +116,8 @@ def main():
     append = [x for x in range(20)]
     for val in append:
         queue.push(val)
-    for _ in range(len(append)):
+    print(queue)
+    for _ in range(10):
         print(queue.pop())
     print(queue)
 
