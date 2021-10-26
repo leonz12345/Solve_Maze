@@ -92,7 +92,7 @@ class Stack:
     """
     def pop(self):
         # If stack is empty, do nothing and return None
-        if self.isEmpty:
+        if self.isEmpty():
             return None
         # Pop the top element
         else:
