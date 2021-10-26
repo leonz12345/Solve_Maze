@@ -5,9 +5,9 @@ Fall 2021
 
 p2stack.py
 
-Partner 1:
-Partner 2:
-Date:
+Partner 1: Leon Zhang
+Partner 2: Casper Hsiao
+Date: Oct 26th 2021
 """
 
 """
@@ -48,20 +48,24 @@ class Stack:
     """
     def isFull(self):
         ##### IMPLEMENT! #####
-        return
+        return self.numElems == len(self.stack)
 
     """
     isEmpty function to check if the stack is empty.
     """
     def isEmpty(self):
         ##### IMPLEMENT! #####
-        return
+        return self.numElems == 0
 
     """
     resize function to resize the stack by doubling its size.
     """
     def resize(self):
         ##### IMPLEMENT! #####
+        new_stack = [None for x in range(0, 2*len(self.stack))]
+        for i in range(self.numElems):
+            new_stack[i] = self.stack[i]
+        self.stack = new_stack
         return
 
     """
@@ -69,6 +73,10 @@ class Stack:
     """
     def push(self, val):
         ##### IMPLEMENT! #####
+        if self.isFull:
+            self.resize()
+        self.stack[numElems] = val
+        self.numElems += 1
         return
 
     """
@@ -76,4 +84,9 @@ class Stack:
     """
     def pop(self):
         ##### IMPLEMENT! #####
-        return None
+        if self.numElems == 0:
+            return None
+        else:
+            val = self.stack[self.numElems-1]
+            self.stack[self.numElems-1] = None
+            return val
