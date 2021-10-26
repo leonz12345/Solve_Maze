@@ -47,24 +47,28 @@ class Stack:
     isFull function to check if the stack is full.
     """
     def isFull(self):
-        ##### IMPLEMENT! #####
+        # Return True if the number of element in the stack is equal to
+        # the length of stack. Return False otherwise.
         return self.numElems == len(self.stack)
 
     """
     isEmpty function to check if the stack is empty.
     """
     def isEmpty(self):
-        ##### IMPLEMENT! #####
+        # Return True if the number of element in the stack is 0.
+        # Return False otherwise.
         return self.numElems == 0
 
     """
     resize function to resize the stack by doubling its size.
     """
     def resize(self):
-        ##### IMPLEMENT! #####
+        # Initialize new stack of size twice the original
         new_stack = [None for x in range(0, 2*len(self.stack))]
+        # Append all elements from the original stack to the new one
         for i in range(self.numElems):
             new_stack[i] = self.stack[i]
+        # Update the stack to the new one
         self.stack = new_stack
         return
 
@@ -72,10 +76,14 @@ class Stack:
     push function to push a value onto the stack.
     """
     def push(self, val):
-        ##### IMPLEMENT! #####
-        if self.isFull:
+        # If the stack is full, resize
+        if self.isFull():
             self.resize()
-        self.stack[numElems] = val
+        # Increment top
+        self.top += 1
+        # Push the value to the top of the stack
+        self.stack[self.top] = val
+        # Update number of element by one
         self.numElems += 1
         return
 
@@ -83,10 +91,29 @@ class Stack:
     pop function to pop the value off the top of the stack.
     """
     def pop(self):
-        ##### IMPLEMENT! #####
+        # If stack is empty, do nothing and return None
         if self.numElems == 0:
             return None
+        # Pop the top element
         else:
-            val = self.stack[self.numElems-1]
-            self.stack[self.numElems-1] = None
+            # Get the top element
+            val = self.stack[self.top]
+            # Set the top to be None
+            self.stack[self.top] = None
+            # Update top and number of element
+            self.top -= 1
+            self.numElems -= 1
             return val
+
+# For testing purpose
+def main():
+    stack = Stack()
+    append = [x for x in range(20)]
+    for val in append:
+        stack.push(val)
+    for _ in range(len(append)):
+        print(stack.pop())
+    print(stack)
+
+if __name__ == "__main__":
+    main()
