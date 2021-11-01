@@ -8,7 +8,7 @@ p2Maze.py
 
 # Import math, other p2 files, plotting, and Wilson's.
 import math
-from project2 import bdfs
+from project2 import *
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap

@@ -51,7 +51,7 @@ class Queue:
     def isFull(self):
         # Return True if the number of element in the queue is equal to
         # the length of queue. Return False otherwise.
-        return self.rear == len(self.queue)
+        return self.numElems == len(self.queue)
 
     """
     isEmpty function to check if the queue is empty.
@@ -66,15 +66,14 @@ class Queue:
     Note: we also reset the front to index 0.
     """
     def resize(self):
-        # Initialize new queue of size twice the original
-        new_queue = [None for x in range(0, 2*len(self.queue))]
-        # Append all elements from the original queue to the new one
-        for i in range(self.numElems):
-            new_queue[i] = self.queue[i]
-        # Update the queue to the new one
-        self.queue = new_queue
+        # Reorder queue if rear is infront of front
+        if self.rear <= self.front:
+            self.queue = self.queue[self.front:] + self.queue[:self.rear]
+        # Reset front and rear
         self.front = 0
         self.rear = self.numElems
+        # Double the size
+        self.queue = self.queue + [None for x in self.queue]
         return
 
     """
@@ -87,7 +86,10 @@ class Queue:
         # Push the value to the back of the queue
         self.queue[self.rear] = val
         # Increment top
-        self.rear += 1
+        if self.rear == len(self.queue)-1:
+            self.rear = 0
+        else:
+            self.rear += 1
         # Update number of element by one
         self.numElems += 1
         return
@@ -106,7 +108,10 @@ class Queue:
             # Set the front to be None
             self.queue[self.front] = None
             # Update front and number of element
-            self.front += 1
+            if self.front == len(self.queue)-1:
+                self.front = 0
+            else:
+                self.front += 1
             self.numElems -= 1
             return val
     
