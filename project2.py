@@ -25,55 +25,55 @@ OUTPUTS
 path: The path from maze.start to maze.exit.
 """
 
-def bfs(maze):
+def bdfs(maze, alg):
+    # If the alg is not BFS or DFS, raise exception.
+    if (alg != 'BFS') and (alg != 'DFS'):
+        raise Exception('Incorrect alg! Need BFS or DFS!')
+    
+    # Initialize Maze
     for vertex in maze.adjList:
         vertex.prev = None
         vertex.dist = float('-inf')
         vertex.visited = False
+
+    if alg == 'BFS':
+        # BFS uses a queue
+        visit = Queue()
+    else:
+        # DFS uses a stack
+        visit = Stack()
+
+    # Set start vertex distance and visited
     maze.start.dist = 0
     maze.start.visited = True
-    visit = Queue()
+    # Push into visit
     visit.push(maze.start)
+    # Keep visting untile visit is empty
     while not visit.isEmpty():
-        print(visit)
+        # Remove the front/top of visit
         vertex = visit.pop()
-        print(vertex)
+        # Exit if reached the end
         if vertex.isEqual(maze.exit):
             break
+        # Iterate through all the neighbors
         for neighbor in vertex.neigh:
-            if neighbor and not neighbor.visited:
+            # If neighbor is not seen before
+            if not neighbor.visited:
+                # Add to visited and change its field
                 neighbor.dist = vertex.dist + 1
                 neighbor.prev = vertex
                 neighbor.visited = True
                 visit.push(neighbor)
+    # Backtrace to find the shortest path
     path = []
     vertex = maze.exit
     while vertex:
         path.insert(0, vertex.rank)
         vertex = vertex.prev
-    print(path)
     return path
-
-
-def bdfs(maze, alg):
-    # If the alg is not BFS or DFS, raise exception.
-    if (alg != 'BFS') and (alg != 'DFS'):
-        raise Exception('Incorrect alg! Need BFS or DFS!')
-    if alg == 'BFS':
-        print('Entered')
-        return bfs(maze)
-    else:
-        print('Entered')
-        return bfs(maze) # CHANGE LATER
 
 """
 Main function.
 """
-# if __name__ == "__main__":
-#     testMazes(False)
-
-def main():
-    testMazes(False)
-
 if __name__ == "__main__":
-    main()
+    testMazes(False)
